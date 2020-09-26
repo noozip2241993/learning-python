@@ -43,7 +43,7 @@ digit_letter_map = [
     ['T', 'U', 'V'],    #8
     ['W', 'X', 'Y']]    #9
 
-#phone_number = str(input('Enter the digits that make up your phone number: '))
+#phone_number = str(input('Enter the 7-digits that make up your phone number: '))
 phone_number = '6733544'
 digits_phone_number = phone_number.count
 digits_possible = digit_letter_map.count
@@ -54,14 +54,14 @@ relevent_maps = []
 for char in phone_number:
     relevent_maps.append(digit_letter_map[int(char)])
 
-res = [[i+j+k+l+m+n+o] 
+res = [i+j+k+l+m+n+o
         for i in relevent_maps[0]
-        for j in relevent_maps[1]
-        for k in relevent_maps[2]
-        for l in relevent_maps[3]
-        for m in relevent_maps[4]
-        for n in relevent_maps[5]
-        for o in relevent_maps[6]]
+            for j in relevent_maps[1]
+                for k in relevent_maps[2]
+                    for l in relevent_maps[3]
+                        for m in relevent_maps[4]
+                            for n in relevent_maps[5]
+                                for o in relevent_maps[6]]
 
 #termination
 for row in res:
