@@ -1,0 +1,1 @@
+This is the home for all projects related specifically to my process for learning to code in Python. 
