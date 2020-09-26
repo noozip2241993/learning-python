@@ -1,5 +1,5 @@
-#IS-640 Midterm 1 Prep
-##Expectations
+# IS-640 Midterm 1 Prep
+## Expectations
 - style and correctness will be graded generously
 - syntax errors = max 35% credit Code must run
 - 2-3 questions
@@ -12,7 +12,7 @@
 - submit .py files on beachboard
     - q1.py, q1.py, q3.py
 
-##TODO
+## TODO
 - Write my own versions of the demos shown in 09262020 class session.
     - [turtle hit the target](https://github.com/ying-teaching/python/blob/master/3-decision-structure/hit_the_target.py)
     - [turtle spiral circles](https://github.com/ying-teaching/python/blob/master/4-repetition-structure/spiral_circles.py)
