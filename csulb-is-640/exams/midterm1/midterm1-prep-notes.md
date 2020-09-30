@@ -1,7 +1,7 @@
 # IS-640 Midterm 1 Prep
 ## Expectations
 - style and correctness will be graded generously
-- syntax errors = max 35% credit Code must run
+- syntax errors = max 25% credit, Code must run
 - 2-3 questions
     - similar to the hit the box demo during 09262020 class session
     - similar in difficulty to the homework
