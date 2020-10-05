@@ -18,6 +18,50 @@ The random number 96 is a not prime number.
 The random number 6 is a not a prime number.
 The random number 11 is a prime number.
 '''
+def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
+    import random
+    result = []
+
+    # do some validation to ensure args make sense.
+    # ensure all args are cast to the correct datatypes
+    count = int(count)
+    min = int(min)
+    max = int(max)
+    unique = bool(unique)
+    testing = bool(testing)
+
+    # ensure the min and max are assigned correctly
+    if min > max:
+        large = min
+        small = max
+        min = small
+        max = large
+    
+    # if unique = True, ensure the range from min to max is large enough to generate enough unique integers
+    if unique:
+        range = max - min + 1 # adding one represents the inclusive range 
+        if max - min < count:
+            max = min + count
+            range = max - min + 1
+            print(f'Your range is too small to provide {count} unique random integers. Will proceed with\n \
+                count = {count}\n \
+                min = {min}\n \
+                max = {min} + {count} = {max}\n \
+            now the range of {range} can possibly generate {count} unique random integers')
+
+    # generate random integers between the min to max arguments (inclusive)
+    # add the this_rand to the result list only if it isn't already there
+    # repeat until the length of the result list equals the count argument.
+    while len(result) < count:
+        this_rand = random.randint(int(min), int(max))
+        if unique:
+            if this_rand not in result:
+                result.append(this_rand)
+        else:
+            result.append(this_rand)
+    
+    if testing: print(result)
+    return result
 
 def is_prime(number):
     number = int(number)
@@ -38,10 +82,11 @@ def test_is_prime():
     RANDS_COUNT = 6 # tested with a value of 6
     RANDS_MIN = 1 # tested with a value of 1
     RANDS_MAX = 100 # tested with a value of 100
+    RANDS_UNIQUE = True
 
-    article = ' ? '
+    article = ' !ERROR! '
     check = ''
-    rands = get_unique_rand_ints(RANDS_COUNT, RANDS_MIN, RANDS_MAX) # live randoms
+    rands = get_rand_ints(RANDS_COUNT, RANDS_MIN, RANDS_MAX, RANDS_UNIQUE, False) # live randoms
 
     # these lists is used while testing
     '''
@@ -72,50 +117,12 @@ def test_is_prime():
         if is_prime(number):
             article = ' '
             #if number not in PRIMES_UNDER_1000:
-            #    check = ' WRONG!'
+            #    check = ' !WRONG IS NOT PRIME!'
         else:
             article = ' not '
             #if number in PRIMES_UNDER_1000:
-            #    check = ' WRONG!'
+            #    check = ' !WRONG IS PRIME!'
         
         print(f'The random number {number} is{article}a prime number.{check}')
-
-def get_unique_rand_ints(count, min, max):
-    import random
-    result = []
-
-    # do some validation to ensure args make sense.
-    # ensure all args are integers
-    count = int(count)
-    min = int(min)
-    max = int(max)
-
-    # ensure the min and max are assigned correctly
-    if min > max:
-        large = min
-        small = max
-        min = small
-        max = large
-    
-    # ensure the range from min to max is large enough to generate enough unique integers
-    range = max - min + 1 # adding one represents the inclusive range 
-    if max - min < count:
-        max = min + count
-        range = max - min + 1
-        print(f'Your range is too small to provide {count} unique random integers. Will proceed with\n \
-            count = {count}\n \
-            min = {min}\n \
-            max = {min} + {count} = {max}\n \
-        now the range of {range} can possibly generate {count} unique random integers')
-
-    # generate random integers between the min to max arguments (inclusive)
-    # add the this_rand to the result list only if it isn't already there
-    # repeat until the length of the result list equals the count argument.
-    while len(result) < count:
-        this_rand = random.randint(int(min), int(max))
-        if this_rand not in result:
-            result.append(this_rand)
-    
-    return result
 
 test_is_prime()
