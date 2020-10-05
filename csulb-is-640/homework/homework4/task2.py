@@ -16,16 +16,27 @@ Keep asking the user input until it type the correct answer.
 
 '''
 def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
+    '''
+    Based on given arguments, this function returns a list of random integers.
+    
+    '''
     import random
     result = []
 
     # do some validation to ensure args make sense.
-    # ensure all args are cast to the correct datatypes
-    count = int(count)
-    min = int(min)
-    max = int(max)
-    unique = bool(unique)
-    testing = bool(testing)
+    # ensure all args are cast to the correct datatypes.
+    # if correct casting is not possible communicate this
+    # to the user and return and empty list 
+    try:
+        count = int(count)
+        min = int(min)
+        max = int(max)
+        unique = bool(unique)
+        testing = bool(testing)
+    except:
+        print('Invalid arguments passed to get_rand_ints()')
+        print('Returning an empty list')
+        return []
 
     # ensure the min and max are assigned correctly
     if min > max:
@@ -36,8 +47,8 @@ def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
     
     # if unique = True, ensure the range from min to max is large enough to generate enough unique integers
     if unique:
-        range = max - min + 1 # adding one represents the inclusive range 
-        if max - min < count:
+        range = max - min + 1
+        if range < count:
             max = min + count
             range = max - min + 1
             print(f'Your range is too small to provide {count} unique random integers. Will proceed with\n \
@@ -47,7 +58,8 @@ def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
             now the range of {range} can possibly generate {count} unique random integers')
 
     # generate random integers between the min to max arguments (inclusive)
-    # add the this_rand to the result list only if it isn't already there
+    # add the this_rand to the result list 
+    # (if unique = True only if it isn't already there)
     # repeat until the length of the result list equals the count argument.
     while len(result) < count:
         this_rand = random.randint(int(min), int(max))
@@ -58,6 +70,7 @@ def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
             result.append(this_rand)
     
     if testing: print(result)
+
     return result
 
 def test_multiplication():
