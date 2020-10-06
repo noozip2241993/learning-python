@@ -15,25 +15,35 @@ is correct, display a message “done”. Otherwise, if the user input
 Keep asking the user input until it type the correct answer.
 
 '''
-def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
+def get_rand_ints(count=1, min=1, max=20, unique=False, testing=False):
     '''
-    Based on given arguments, this function returns a list of random integers.
-    
+    Based on given arguments, this function returns a list of random integers.\n
+        count should be a non-negative integer\n
+        min and max should each be any integer\n
+        unique and testing should each be boolean values\n
+    Passing invalid arguments will result in an empty list being returned.\n
+    If unique values are requested and count is greater than the inclusive range
+    of min and max then max will be changed to allow for the required count of 
+    unique values to be possible.
     '''
     import random
     result = []
 
     # do some validation to ensure args make sense.
-    # ensure all args are cast to the correct datatypes.
-    # if correct casting is not possible communicate this
-    # to the user and return and empty list 
     try:
+        # ensure all args are cast to the correct datatypes. 
         count = int(count)
         min = int(min)
         max = int(max)
         unique = bool(unique)
         testing = bool(testing)
+
+        # ensure the count is non-negative
+        if count < 0:
+            raise ValueError('A count argument of {count} was passed to get_random_ints. Count cannot be a negative number.')
     except:
+        # if correct casting is not possible communicate this
+        # to the user and return and empty list
         print('Invalid arguments passed to get_rand_ints()')
         print('Returning an empty list')
         return []
@@ -73,8 +83,13 @@ def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
 
     return result
 
-def test_multiplication():
-    multiples = tuple(get_rand_ints(2, 1, 9, False, False))
+def test_multiplication(min=1, max=9):
+    '''
+    This function presents the user with a multiplication problem
+    over and over until they input the correct product.
+    '''
+
+    multiples = tuple(get_rand_ints(2, min, max, False, False))
     correct_answer = multiples[0] * multiples[1]
     user_input = ''
     prompt = f'How much is {multiples[0]} times {multiples[1]}? '

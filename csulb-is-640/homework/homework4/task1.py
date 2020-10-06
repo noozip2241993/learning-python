@@ -18,24 +18,35 @@ The random number 96 is a not prime number.
 The random number 6 is a not a prime number.
 The random number 11 is a prime number.
 '''
-def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
+def get_rand_ints(count=1, min=1, max=20, unique=False, testing=False):
     '''
-    Based on given arguments, this function returns a list of random integers.
+    Based on given arguments, this function returns a list of random integers.\n
+        count should be a non-negative integer\n
+        min and max should each be any integer\n
+        unique and testing should each be boolean values\n
+    Passing invalid arguments will result in an empty list being returned.\n
+    If unique values are requested and count is greater than the inclusive range
+    of min and max then max will be changed to allow for the required count of 
+    unique values to be possible.
     '''
     import random
     result = []
 
     # do some validation to ensure args make sense.
-    # ensure all args are cast to the correct datatypes.
-    # if correct casting is not possible communicate this
-    # to the user and return and empty list 
     try:
+        # ensure all args are cast to the correct datatypes. 
         count = int(count)
         min = int(min)
         max = int(max)
         unique = bool(unique)
         testing = bool(testing)
+
+        # ensure the count is non-negative
+        if count < 0:
+            raise ValueError('A count argument of {count} was passed to get_random_ints. Count cannot be a negative number.')
     except:
+        # if correct casting is not possible communicate this
+        # to the user and return and empty list
         print('Invalid arguments passed to get_rand_ints()')
         print('Returning an empty list')
         return []
@@ -75,7 +86,12 @@ def get_rand_ints(count=2, min=1, max=9, unique=False, testing=False):
 
     return result
 
-def is_prime(number):
+def is_prime(number=1,verbose=False):
+    '''
+    Given an integer, this function returns a boolean value indicating whether 
+    that integer is a prime number.\n
+    If True, the verbose arg will show the factors for the number before returning. 
+    '''
     number = int(number)
     factors = []
 
@@ -83,14 +99,19 @@ def is_prime(number):
         if number % n == 0:
             factors.append(n)
     
+    if verbose: print(factors) # show the factors
+
     if len(factors) == 2:
-        #print(factors) # for testing porposes show the factors
         return True
     else:
-        #print(factors) # for testing porposes show the factors
         return False
 
 def test_is_prime():
+    '''
+    This function tests whether a series of 6 random integers between 1 and 100 (inclusive)
+    are prime numbers using the is_prime function.
+    '''
+
     RANDS_COUNT = 6
     RANDS_MIN = 1 #inclusive
     RANDS_MAX = 100 #inclusive
@@ -128,7 +149,7 @@ def test_is_prime():
     '''
 
     for number in rands:
-        if is_prime(number):
+        if is_prime(number,False):
             article = ' '
             
             #for testing false positives
