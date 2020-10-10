@@ -25,7 +25,7 @@ def hit_the_target():
 
     TARGET_CENTER_X = 100  # Target's Center X
     TARGET_CENTER_Y = 250  # Target's Center Y
-    TARGET_RADIUS = 30 / 2 # Circle radius
+    TARGET_RADIUS = 30 # Circle radius
 
     PEN_SPEED = 0
     EXIT_VALUE = -1
@@ -38,7 +38,7 @@ def hit_the_target():
     pen.hideturtle()
     pen.speed(PEN_SPEED)
     pen.penup()
-    pen.goto(TARGET_CENTER_X, TARGET_CENTER_Y)
+    pen.goto(TARGET_CENTER_X, TARGET_CENTER_Y - TARGET_RADIUS)
     pen.pendown()
     pen.circle(TARGET_RADIUS)
 
