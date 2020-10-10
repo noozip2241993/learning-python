@@ -96,7 +96,7 @@ def Tortoise_Hare():
         race_on = True
         starting_gun()
         while race_on:
-            time.sleep(TURN_DELAY_SEC)
+            time.sleep(TURN_DELAY_SEC / 10)
 
             t_pos += tort_move()
             h_pos += hare_move()
