@@ -38,7 +38,7 @@ def hit_the_target():
     pen.hideturtle()
     pen.speed(PEN_SPEED)
     pen.penup()
-    pen.goto(TARGET_CENTER_X, TARGET_CENTER_Y)
+    pen.goto(TARGET_CENTER_X, TARGET_CENTER_Y - TARGET_RADIUS)
     pen.pendown()
     pen.circle(TARGET_RADIUS)
 
