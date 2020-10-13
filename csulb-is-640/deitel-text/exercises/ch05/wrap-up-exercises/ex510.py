@@ -4,7 +4,6 @@ Write a script that produces all possible anagrams of a given string using only 
 that you’ve seen to this point in the book. [The itertools module provides many functions, \n\
 including one that produces permutations.]")
 
-import random
 words = ['sock', 'neat', 'march', 'zonked', 'toad', 'whisper', 'four', 'admit', 
 'list', 'effect', 'guess', 'harmony', 'alluring', 'sun', 'count', 'half', 'five', 'hurried', 
 'stomach', 'rush', 'refuse', 'ground', 'reject', 'heal', 'communicate', 'damaged', 'terrify', 
@@ -20,19 +19,87 @@ words = ['sock', 'neat', 'march', 'zonked', 'toad', 'whisper', 'four', 'admit',
 'deified', 'hadedah', 'halalah', 'reifier', 'repaper', 'reviver', 'rotator', 'seities', 
 'sememes', 'rotavator']
 
-def generate_permutations(text):
+def generate_permutations(text=''):
+    input_str = text
+
+    if len(input_str)  == 0:
+        return ['']
+
     result = []
+    first_char = input_str[0]
+    other_chars = input_str[1:]
+
+    words = generate_permutations(other_chars)
+    for word in words:
+        for i in range(len(word) + 1):
+            s = word[:i] + first_char + word[i:]
+            result.append(s)
     
     return result
+    
+def print_list_in_rows(my_list=[], col_separator=' ', desired_row_count=10):
+    '''
+    Given a list object, a separating character and a number of rows
+    print_list_in_rows will print that list over as many columns as necessary
+    to not exceed the given number of rows. The separator character will indicate
+    the breaks between columns.
 
-def print_list_in_rows(my_list=[], separator=' ', total_rows=10):
-    for i, item in enumerate(my_list):
-        if i % (len(my_list) // (total_rows - 1)) != 0:
-            print(item, end=separator)
+    If the provided row count is greater than the number of elements in the list, 
+    the list will print based on the number of elements in it instead of the given
+    number of rows. 
+    '''
+    total_rows = desired_row_count
+    input_list = my_list
+    sep = col_separator
+
+    for i, item in enumerate(input_list):
+        if total_rows > len(input_list):
+            total_rows = len(input_list) + 1
+        
+        if i % (len(input_list) // (total_rows - 1)) != 0:
+            print(item, end=sep)
         else:
             print(item) 
 
-this_word = words[random.randint(0, len(words) - 1)]
-this_word_anagrams = generate_permutations(this_word)
+def get_random_list_element(my_list=[]):
+    '''
+    Given a list object return a random element from that list.
+    '''
+    import random
+    in_list = my_list
+    return in_list[random.randint(0, len(words) - 1)]
 
-print_list_in_rows(this_word_anagrams, '|')
+def filter_to_dictionary_words(words=[]):
+    import enchant
+    raw_list = words
+    dictionary = enchant.Dict('en_US')
+    result = []
+    for item in raw_list:
+        #handle case, spaces
+        item = item.lower() # eliminate case
+        sub_items = item.split()# eliminate spaces
+
+        this_result = ''
+        keep_checking = True
+
+        while keep_checking:
+            for sub_item in sub_items:
+                if dictionary.check(sub_item):
+                    this_result += sub_item + ' '
+                else:
+                    keep_checking = False
+                    this_result = ''
+            this_result = this_result.strip()
+            keep_checking = False
+
+        if this_result != '' and len(this_result) == len(item) and this_result not in result:
+            result.append(this_result)
+    if len(result) == 0:
+        result.append('No dictionary words')
+
+    return result
+    
+this_word = get_random_list_element(words)
+this_word_anagrams = generate_permutations(this_word)
+this_word_anagrams = filter_to_dictionary_words(this_word_anagrams)
+print(f'Anagrams of: {this_word} are... {this_word_anagrams}')
