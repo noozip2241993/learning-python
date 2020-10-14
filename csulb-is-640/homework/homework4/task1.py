@@ -118,7 +118,7 @@ def test_is_prime():
     RANDS_UNIQUE = True
 
     rands = get_rand_ints(RANDS_COUNT, RANDS_MIN, RANDS_MAX, RANDS_UNIQUE, False)
-    
+  
     article = ' !ERROR! '
     for number in rands:
         if is_prime(number,False):
