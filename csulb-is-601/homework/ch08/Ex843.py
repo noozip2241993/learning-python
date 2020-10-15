@@ -19,7 +19,7 @@ print('a. What is the likelihood this group will suffer an average of more than 
 z = my_stats.z_value_known_sigma(X_BAR_A, MU, SIGMA, SAMPLE_SIZE)
 print(f'z = {z:.2f}')
 area = .5000
-print(f'Because the sample mean (X_BAR {X_BAR_A}) is more than the population mean (MU {MU}), we subrtact {area:.4f} from .5000 to get the area for z-values greater than {z:2f}.')
+print(f'Because the sample mean (X_BAR {X_BAR_A}) is more than the population mean (MU {MU}), we subtract {area:.4f} from .5000 to get the area for z-values greater than {z:2f}.')
 print(f'.5000 - {area} = { .5000 - area:.4f}')
 
 print('b. Compute the probability the mean number of attacks over the next 10 years is between 500 and 600.')

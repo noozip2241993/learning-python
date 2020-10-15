@@ -38,8 +38,40 @@ itself. You may want to remove that text from your copy of the book before analy
 # 4.3 sentence statistics
 # 4.3.1 average sentence length
 
+def char_frequency(text=''):
+    '''
+    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
+    in the string and the count of it's occurances within that string.
+    '''
+    in_str = text
+    result = [(x, len([c for c in word if c == x])) for x in get_unique_chars(word)]
+    return result
+
+def word_frequency(text=''):
+    '''
+    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
+    in the string and the count of it's occurances within that string.
+    '''
+    in_str = text
+    result = [(x, len([c for c in word if c == x])) for x in get_unique_chars(word)]
+    return result
+
+def remove_non_alpha(text=''):
+    in_str = text
+    special_chars = " ~`!@#$%^&*()_-+={[}]|\:;\"'<,>.?/"
+    numberic_chars = '1234567890'
+    bad_chars = special_chars + numberic_chars
+    result = [x for x in in_str if x not in bad_chars]
+    return result
+
+def get_unique_chars(text=''):
+    in_str = text
+    result = {x for x in in_str} #returns a set of the unique charaters in the text arg 
+    return result
+
+
 # initialization phase
-FOLDERNAME = 'ch09//wrap-up-exercises//resources//analyze-txt//'
+FOLDERNAME = 'csulb-is-640\\deitel-text\\exercises\\ch09\\wrap-up-exercises\\resources\\analyze-txt\\'
 FILENAME = 'pride-and-prejudice.txt'
 BOOK_TITLE = 'PRIDE AND PREJUDICE'
 START_TEXT = '*** START OF THIS PROJECT GUTENBERG EBOOK ' + BOOK_TITLE + ' ***'
@@ -81,15 +113,12 @@ def analyse_file_txt(file_name, folder_path, encoding):
 
     words = []
     total_words = 0
-    ave_word_len = 0
 
     sentences = []
     total_sentences = 0
-    ave_sentence_len = 0
 
     paragraphs = []
     total_paragraphs = 0
-    ave_paragraph_len = 0
 
     # loop through characters in book_text to build word, 
     # sentence and paragraph lists.
@@ -170,9 +199,16 @@ def analyse_file_txt(file_name, folder_path, encoding):
         total_char += 1
 
     # termination
-    print(f'Total Words: {total_words}')
-    print(f'Total Sentences: {total_sentences}')
-    print(f'Total Paragraphs: {total_paragraphs}')
+    print(f'Total Characters: {total_char:,}')
+    print(f'Total Words: {total_words:,}')
+    print(f'Total Sentences: {total_sentences:,}')
+    print(f'Total Paragraphs: {total_paragraphs:,}')
+    print(f'Average word length: {total_char / total_words:,.1f} characters')
+    print(f'Average sentence length: {total_words / total_sentences:,.1f} words')
+    print(f'Average paragraph length: {total_words / total_paragraphs:,.1f} words')
+    print(f'First parapraph: {paragraphs[0]}')
+    print(f'Last paragraph: {paragraphs[-1]}')
+    print(f'Word frequencies: {word')
 
     # write words to file
     with open (FOLDERNAME + BOOK_TITLE + ' words.txt', mode='w') as words_file:
@@ -188,8 +224,5 @@ def analyse_file_txt(file_name, folder_path, encoding):
     with open (FOLDERNAME + BOOK_TITLE + ' paragraphs.txt', mode='w') as paragraph_file:
         for paragraph in paragraphs:
             paragraph_file.write(f'{paragraph}\n')
-
-def method2((file_name, folder_path, encoding):
-
 
 analyse_file_txt(FILENAME, FOLDERNAME, ENCODING)
