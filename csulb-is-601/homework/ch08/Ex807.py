@@ -1,8 +1,8 @@
 '''
-"A population consists of the following five values: 12, 12, 14, 15, and 20.
+" population consists of the following five values: 12, 12, 14, 15, and 20.
 
 a. List all samples of size 3, and compute the mean of each sample.
-b. Compute the mean of the distribution of sample means and the population mean. Compare the two values.
+b. Compute the mean of the distribution of samplAe means and the population mean. Compare the two values.
 c. Compare the dispersion in the population with that of the sample means."
 '''
 import itertools
@@ -35,5 +35,7 @@ print('\nc.')
 #of the sample means.
 pop_coeff_var = stat.stdev(POPULATION) / pop_mean
 sample_coeff_var = stat.stdev(sample_means) / mean_of_sample_means
+print(stat.stdev(sample_means))
+print(mean_of_sample_means)
 print(f'{"sample Coeff of Variation:":>45} {sample_coeff_var:<.2f}')
 print(f'{"pop Coeff of Variation:":>45} {pop_coeff_var:<.2f}')
