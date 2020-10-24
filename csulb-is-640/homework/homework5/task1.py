@@ -20,7 +20,7 @@ def task1():
                 score = int(record[1])
                 valid_records.append([name, score])
             except ValueError: # Handle ValueErrors for bad score values
-                print(f'Bad score value for {record}, ignored.')
+                print(f'Bad score value for {record[0]}, ignored.')
         
         student_count = len(valid_records) # Calculate the number of students
         class_ave = sum(record[1] for record in valid_records) / student_count # Calculate the average of student scores

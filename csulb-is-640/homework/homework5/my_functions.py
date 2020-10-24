@@ -24,11 +24,12 @@ def change_working_dir(new_directory=''):
 def get_lines_from_text_file(file_name=''):
     in_filename = file_name
     result = []
-    with open(in_filename, 'r') as text_file:
+    with open(in_filename, 'r', encoding='utf8') as text_file:
         line = text_file.readline()
         while line != '':
             result.append(line.rstrip('\n'))
             line = text_file.readline()
+    result[0] = result[0].replace('\ufeff', '') #because we force encoding to 'utf8' '\ufeff' may be written to the result. This removes it.
     return result
 
 def get_records_from_text_file(file_name='',delimiter=None):
@@ -59,8 +60,11 @@ def write_records_to_text_file(file_name='log.txt', records=[]):
     with open(in_filename, 'w') as text_file:
         for record in in_records:
             str_record = ''
-            for field in record:
-                str_record += f'{field} '
+            if type(record) is str:
+                str_record = record
+            else:
+                for field in record:
+                    str_record += f'{field} '
             str_record = str_record.rstrip(' ') + '\n'
             text_file.write(str_record)
 
