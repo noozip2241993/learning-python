@@ -4,7 +4,7 @@ This is the home for all projects related specifically to my process for learnin
 ## CSULB-IS-640
 I took the Cal State Long Beach Information Systems course 640 (Business Application Programming) in the fall of 2020 as a mpart of their MSIS program.
 
-The course was taught with a focus on the Python language using the text "Intro to Python for Computer Science and Data Science" by Paul and Harvey Deitel.
+The course was taught with a focus on the Python3 language using the text "Intro to Python for Computer Science and Data Science" by Paul and Harvey Deitel.
 
 ### Topics covered
 - CLI
