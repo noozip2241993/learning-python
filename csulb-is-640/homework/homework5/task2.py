@@ -3,7 +3,9 @@ from my_functions import get_lines_from_text_file
 from my_functions import write_records_to_text_file
 
 def task2():
+
     change_working_dir() # Ensure that the Python working directory is the directory where this file is
+    
     BOOK_FILE = 'book.txt'
     #BOOK_FILE = 'book_missing_A.txt'
     ALL_LETTERS = "It has all letters."

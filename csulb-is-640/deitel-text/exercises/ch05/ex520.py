@@ -62,9 +62,9 @@ def display_table(two_dim_list=[[]]):
     col_1_values = [(x[0]) for x in in_list]
     col_2_values = [(x[1]) for x in in_list]
 
-    print(col_0_values)
-    print(col_1_values)
-    print(col_2_values)
+    #print(col_0_values)
+    #print(col_1_values)
+    #print(col_2_values)
     pass
 
 display_table(names)

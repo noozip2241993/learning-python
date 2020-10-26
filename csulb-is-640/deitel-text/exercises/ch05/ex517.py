@@ -35,37 +35,32 @@ def is_odd(x):
 def lambda_performance_test(verbose=False):
     import time
 
-    numbers = [10, 3, 7, 1, 9, 4, 2, 8, 5, 6]
+    #numbers = [10, 3, 7, 1, 9, 4, 2, 8, 5, 6]
     numbers = get_rando_numbers()
 
-    #method a
+    #method a - map then filter w/ lambdas
     start_time = time.time()
-
     list(map(lambda x: x ** 2, filter(lambda x: x % 2 != 0, numbers)))
-
     end_time = time.time()
     duration_a = end_time - start_time
 
-    #method b
+    #method b - map then filter w/ functions
     start_time = time.time()
-
     list(map(square_it, filter(is_odd, numbers)))
-
     end_time = time.time()
     duration_b = end_time - start_time
+
     #'a) How many times does the filter operation call its lambda argument? 10')
     #'b) How many times does the map operation call its lambda argument? 5')
 
-    #method c
+    #method c - filter then map w/ functions
     start_time = time.time()
-
     list(filter(is_odd, map(square_it, numbers)))
-
     end_time = time.time()
     duration_c = end_time - start_time
+
     #a) How many times does the filter operation call its lambda argument? 10')
     #'b) How many times does the map operation call its lambda argument? 10')
-
 
     durations = [duration_a, duration_b, duration_c]
 
@@ -89,7 +84,7 @@ def stress_test(func, observations=100):
     return results
 
 # run the stress test
-test_results = stress_test(lambda_performance_test, 1000)
+test_results = stress_test(lambda_performance_test, 100)
 
 #collate the results
 method_a_results = [(x[0]) for x in test_results]

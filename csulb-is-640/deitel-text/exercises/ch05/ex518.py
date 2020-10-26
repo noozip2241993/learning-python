@@ -5,8 +5,11 @@ the even integers from 2 through 10. Reimplement your code with list comprehensi
 rather than filter and map.
 '''
 
-numbers = [n for n in range(10)]
+#via lambdas and map / filter
+numbers = [n for n in range(1, 10)]
 numbers = list(map(lambda x: x ** 3, filter(lambda x: x % 2 == 0, numbers)))
+print(numbers)
 print(sum(numbers))
 
-print(sum([n ** 3 for n in range(10) if n % 2 == 0]))
+#via list comprehension
+print(sum([n ** 3 for n in range(1, 10) if n % 2 == 0]))

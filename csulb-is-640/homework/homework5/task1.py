@@ -4,7 +4,6 @@ from my_functions import write_records_to_text_file
 
 def task1():
     DATA_FILE = 'scores.txt'
-    DATA_FILE = 'scores_bad.txt'
     #DATA_FILE = 'does_not_exist.txt'
     LOG_FILE = 'log.txt'
 

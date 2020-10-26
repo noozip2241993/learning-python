@@ -19,6 +19,7 @@ words = ['sock', 'neat', 'march', 'zonked', 'toad', 'whisper', 'four', 'admit',
 'deified', 'hadedah', 'halalah', 'reifier', 'repaper', 'reviver', 'rotator', 'seities', 
 'sememes', 'rotavator']
 
+
 def generate_permutations(text=''):
     input_str = text
 
@@ -99,7 +100,16 @@ def filter_to_dictionary_words(words=[]):
 
     return result
     
-this_word = get_random_list_element(words)
-this_word_anagrams = generate_permutations(this_word)
-this_word_anagrams = filter_to_dictionary_words(this_word_anagrams)
-print(f'Anagrams of: {this_word} are... {this_word_anagrams}')
+def anagrams(word='', only_english=False):
+    this_word = word
+    if this_word == '':
+        this_word = get_random_list_element(words)
+    
+    this_word_anagrams = generate_permutations(this_word)
+
+    if only_english:
+        this_word_anagrams = filter_to_dictionary_words(this_word_anagrams)
+    
+    print(f'Anagrams of: {this_word} are... {this_word_anagrams}')
+
+anagrams('FOX')
