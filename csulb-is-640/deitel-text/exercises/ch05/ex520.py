@@ -1,10 +1,11 @@
 '''
 5.20 [Display a Two-Dimensional List in Tabular Format] Define a function named
-display_table that receives a two-dimensional list and displays its contents in tabular format. List the column indices as headings across the top, and list the row indices at the left
-of each row.
+display_table that receives a two-dimensional list and displays its contents in 
+tabular format. List the column indices as headings across the top, and list the 
+row indices at the left of each row.
 '''
 
-names = [['First Name', 'Last Name'], ['Noel', 'Schieber'],
+names = [['Noel', 'Schieber'],
 ['Danyelle', 'Scranton'],
 ['Dori', 'Marone'],
 ['Ernie', 'Guido'],
@@ -62,9 +63,9 @@ def display_table(two_dim_list=[[]]):
     col_1_values = [(x[0]) for x in in_list]
     col_2_values = [(x[1]) for x in in_list]
 
-    #print(col_0_values)
-    #print(col_1_values)
-    #print(col_2_values)
+    tabular_rows = [f'{col_0_values[i]:>2} {col_1_values[i]:<10} {col_2_values[i]:<}' for i in range(len(in_list))]
+    for i in range(len(tabular_rows)):
+        print(tabular_rows[i])
     pass
 
 display_table(names)
