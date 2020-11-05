@@ -28,4 +28,5 @@ def task1():
         print(f'The class average is {class_ave:.0f} for {student_count} students.')
 
         write_records_to_text_file(LOG_FILE, valid_records) # Write the output to log.txt. use 'with' statement
+
 task1()
