@@ -1,13 +1,15 @@
-START_ORD = ord('A') 
-END_ORD = ord('Z')
-LETTER_COUNT = 30
+def main():
+    START = ord('A')
+    END = ord('Z')
+    COUNT = 30
 
-import random
+    import random
+    rando_letters = []
+    for i in range(COUNT):
+        letter = chr(random.randint(START, END))
+        rando_letters.append(letter)
 
-random_letters = []
-for i in range(LETTER_COUNT):
-    letter = chr(random.randint(START_ORD, END_ORD)) # generate a random ord value from ord('A') to ord('Z') then cast as a character
-    random_letters.append(letter)
+    print(sorted(rando_letters, reverse=False))
+    print(sorted(rando_letters, reverse=True))
 
-print(sorted(random_letters, reverse=False)) #print in ascending order
-print(sorted(random_letters, reverse=True)) #print in decending order
+main()
