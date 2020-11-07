@@ -8,7 +8,7 @@ def get_rando_numbers(count=100, min=1, max=20):
 def is_prime(number):
     this_num = number
 
-    if this_num > 1:        
+    if this_num > 1:
         for i in range(2, this_num - 1):
             if this_num % i == 0:
                 return False
@@ -72,7 +72,7 @@ def main():
         if is_prime(number):
             primes.append(number)
 
-    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=primes, data_labels=True)
+    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=primes, data_labels=True, vertical=True)
 
     pass
 
