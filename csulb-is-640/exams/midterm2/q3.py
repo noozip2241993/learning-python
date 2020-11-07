@@ -62,17 +62,17 @@ def main():
     MAX = 1050
 
     #for testing
-    #COUNT = 100 #for testing
+    #COUNT = 100
     #primes = [1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049]
 
-    rando_numbers = get_rando_numbers(COUNT, MIN, MAX)
+    rando_numbers = get_rando_numbers(COUNT, MIN, MAX) # generate random integers from MIN to MAX inclusively
     primes = []
 
     for number in rando_numbers:
         if is_prime(number):
             primes.append(number)
 
-    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=primes, data_labels=True, vertical=True)
+    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=primes, data_labels=True)
 
     pass
 
