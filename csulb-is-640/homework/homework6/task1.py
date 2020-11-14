@@ -1,42 +1,4 @@
-'''
-9.10 (Project: Analyzing a Book from Project Gutenberg) A great source of plain text
-files is the collection of over 57,000 free e-books at Project Gutenberg:
-https://www.gutenberg.org
-
-These books are out of copyright in the United States. For information about Project
-Gutenberg’s Terms of Use and copyright in other countries, see:
-https://www.gutenberg.org/wiki/Gutenberg:Terms_of_Use
-
-Download the text-file version of Pride and Prejudice from Project Gutenberg
-https://www.gutenberg.org/ebooks/1342
-
-Create a script that reads Pride and Prejudice from a text file. Produce statistics about the
-book, including the total word count, the total character count, the average word length,
-the average sentence length, a word distribution containing frequency counts of all words,
-and the top 10 longest words. 
-
-In the “Natural Language Processing (NLP)” chapter, you’ll find lots of more sophisticated 
-techniques for analyzing and comparing such texts. Each Project Gutenberg e-book begins and 
-ends with some additional text, such as licensing information, which is not part of the e-book 
-itself. You may want to remove that text from your copy of the book before analyzing its text.
-'''
-## DESIGN
-# 1 read the txt file to a string object
-# 2 remove non-prose characters
-# 3 parse prose
-# 3.1 parse words to a list
-# 3.2 parse sentences to a list
-# 3.3 parse paragraphs to a list
-# 4 produce statistics
-# 4.1 character statistics
-# 4.1.1 total character count
-# 4.2 word statistics
-# 4.2.1 total word count
-# 4.2.2 average word length
-# 4.2.3 frequency count of all words
-# 4.3.4 10 longest words
-# 4.3 sentence statistics
-# 4.3.1 average sentence length
+from my_functions import change_working_dir
 
 def char_frequency(text=''):
     '''
@@ -60,40 +22,17 @@ def get_unique_chars(text=''):
     result = {x for x in in_str} #returns a set of the unique charaters in the text arg 
     return result
 
-
-# initialization phase
-FOLDERNAME = 'csulb-is-640\\deitel-text\\exercises\\ch09\\wrap-up-exercises\\resources\\analyze-txt\\'
-FILENAME = 'pride-and-prejudice.txt'
-BOOK_TITLE = 'PRIDE AND PREJUDICE'
-START_TEXT = '*** START OF THIS PROJECT GUTENBERG EBOOK ' + BOOK_TITLE + ' ***'
-END_TEXT = '*** END OF THIS PROJECT GUTENBERG EBOOK ' + BOOK_TITLE + ' ***'
-ENCODING = 'utf-8'
-
-def ensure_folder(folder_path=''):
-    ''' checks whether the folder provided exists. creates it if it doesn't.'''
-    import os
-    # ensure the folder exists
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-
-def analyse_file_txt(file_name, folder_path, encoding):
-    END_SENTENCE = ['.','?','!']
+def analyse_file_txt_OLD(file_name, encoding):
+    END_SENTENCE = ('.','?','!')
+    END_WORD = ('.','?','!',' ')
     ABBREVIATIONS = ['Mr', 'Mrs']
-    full_text = ''
 
-    full_path = folder_path + file_name
-    # ensure the folder exists
-    ensure_folder(folder_path)
+    full_text = ''
 
     # processing phase
     # read from file
-    with open(full_path, mode='r', encoding=encoding) as pride:
-        full_text = pride.read()
-
-    #determine the actual book's text (as opposed to copyright text, etc)
-    s_index = full_text.find(START_TEXT) + len(START_TEXT)
-    e_index = full_text.find(END_TEXT)
-    book_text = full_text[s_index:e_index]
+    with open(file_name, mode='r', encoding=encoding) as txt_file:
+        full_text = txt_file.read()
 
     # analyse the text character by character
     '''total word count, the total character count, the average word length,
@@ -124,7 +63,7 @@ def analyse_file_txt(file_name, folder_path, encoding):
     end_sentence = False
     end_paragraph = False
 
-    for char in book_text:
+    for char in full_text:
         # is this character...
         #in a word
         if char.isalpha():
@@ -160,8 +99,6 @@ def analyse_file_txt(file_name, folder_path, encoding):
 
         # Build words, sentences and paragraphs
         if end_word:
-            if this_word == 'in':
-                print() #Working on ensuring no '\n' chars in any words sentences or paragraphs
             words.append(this_word)
             if char == '\n':
                 this_sentence += this_word + ' '
@@ -200,19 +137,85 @@ def analyse_file_txt(file_name, folder_path, encoding):
     print(f'First parapraph: {paragraphs[0]}')
     print(f'Last paragraph: {paragraphs[-1]}')
 
-    # write words to file
-    with open (FOLDERNAME + BOOK_TITLE + ' words.txt', mode='w') as words_file:
-        for word in words:
-            words_file.write(f'{word}|')
+def my_split(to_split, separators):
+    import re
+    reg_ex = '|'.join(map(re.escape, separators))
+    return re.split(reg_ex, to_split)
 
-    # write sentences to file
-    with open (FOLDERNAME + BOOK_TITLE + ' sentences.txt', mode='w') as sentence_file:
-        for sentence in sentences:
-            sentence_file.write(f'{sentence}\n')
+def my_remove(str_to_edit, characters_to_remove):
+    in_str = str_to_edit
+    removes = characters_to_remove
 
-    # write paragraphs to file
-    with open (FOLDERNAME + BOOK_TITLE + ' paragraphs.txt', mode='w') as paragraph_file:
-        for paragraph in paragraphs:
-            paragraph_file.write(f'{paragraph}\n')
+    for char in removes:
+        if char == '.':
+            pass
+        in_str = in_str.replace(char, '')
+    return in_str
 
-analyse_file_txt(FILENAME, FOLDERNAME, ENCODING)
+def analyse_file_txt(file_name, sentence_delimiters, omission_list=None):
+    SENTENCE_DELIMITERS = sentence_delimiters
+    NON_SPACE_WHITESPACE = ['\n', '\t', '\r', '\f', '\v']
+    SYMBOLS = ['~', '@', '#', '$', '%', '^', '*', '_', '-', '+', '=', '{', '[', '}', ']', '|', '<', '>', '/']
+    SENT_END_PUNCT = ['!', '.', '?']
+    OTHER_PUNCTUATION = ['\"', '\'', '`', '&', '(', ')', ':', ';', ',']
+
+    # read the file
+    full_text = ''
+    with open(file_name, mode='r', encoding='utf-8') as txt_file:
+        full_text = txt_file.read()
+
+    # process the file's text into a list of sentences
+    sentences = [line for line in my_split(full_text, SENTENCE_DELIMITERS) if line != ''] # break the full_text into a list of sentences
+    sentences = [line.strip('\n') for line in sentences] # ensure no newline chars within sentences
+    #[print(sentence) for sentence in sentences]
+
+    # generate statistics about the sentences
+    sentence_stats = []
+    for sentence in sentences:
+        bad_chars = ''.join(NON_SPACE_WHITESPACE + SYMBOLS + SENT_END_PUNCT + OTHER_PUNCTUATION)
+        just_letters_space = ''.join(char for char in sentence if char not in bad_chars)
+        just_letters = just_letters_space.replace(' ','')
+        letter_count = len(just_letters)
+        character_count = len(sentence)
+        word_list = just_letters_space.split(' ')
+        word_count = sentence.count(' ') + 1
+        average_word_length = letter_count / word_count
+        sentence_stats.append({'text': sentence,
+                                'letter_count': letter_count,
+                                'character_count': character_count,
+                                'words': word_list,
+                                'word_count': word_count,
+                                'ave_word_length': average_word_length})
+
+    word_stats = []
+    for sentence in sentence_stats:
+        for word in sentence['words'] if word not in word_stats[]
+            word_stats.append({})
+            pass
+
+    longest_sentence = sorted(sentence_stats, key=lambda dict: dict['character_count'], reverse=True)[0]['text']
+    total_word_count = 0
+    total_character_count = 0
+    overall_average_word_length = 0
+    overall_average_sentence_length = 0
+
+    print(f'Total word count: {total_word_count}')
+    print(f'Total character count: {total_character_count}')
+    print(f'The average word length: {overall_average_word_length} letters')
+    print(f'The average sentence length: {overall_average_sentence_length} words')
+    print('All words ending in “ly”: ')
+    print('10 longest words: ')
+    print(f'Longest sentence: {longest_sentence}')
+
+def main():
+    change_working_dir()
+    FILENAME = 'remarks.txt'
+    ##WORD_OMISSIONS = ['(Applause.)', 'THE PRESIDENT:', 'AUDIENCE:', 'END']
+    WORD_OMISSIONS = None
+    SENTENCE_DELIMITERS = ['  ','.\n', '\n\n']
+    analyse_file_txt(FILENAME, SENTENCE_DELIMITERS, WORD_OMISSIONS)
+
+    pass
+
+if __name__ == '__main__':
+    main()

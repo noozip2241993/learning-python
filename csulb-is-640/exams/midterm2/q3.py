@@ -1,3 +1,9 @@
+import math
+import matplotlib.pyplot as plt # why so slow? https://stackoverflow.com/questions/8955869/why-is-plotting-with-matplotlib-so-slow
+import seaborn as sns
+import numpy as np
+import time
+
 def get_rando_numbers(count=100, min=1, max=20):
     from random import randint
     COUNT = count
@@ -6,13 +12,18 @@ def get_rando_numbers(count=100, min=1, max=20):
     return [randint(START, END) for x in range(COUNT)]
 
 def is_prime(number):
-    this_num = number
-
-    if this_num > 1:
-        for i in range(2, this_num - 1):
-            if this_num % i == 0:
-                return False
+    for i in range(2, math.floor(math.sqrt(number))):
+        if number % i == 0:
+            return False
     return True
+
+def get_primes(min, max):
+    primes = set()
+    for number in range(min, max + 1):
+        if is_prime(number):
+            primes.add(number)
+    print(primes)
+    return primes
 
 def show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = '', data=[], data_labels=True, vertical=True):
     '''
@@ -27,9 +38,6 @@ def show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = '', 
             Returns:
                     None
     '''
-    import matplotlib.pyplot as plt # why so slow? https://stackoverflow.com/questions/8955869/why-is-plotting-with-matplotlib-so-slow
-    import seaborn as sns
-    import numpy as np
     
     this_data = data
     this_y_label = 'Frequency'
@@ -56,24 +64,32 @@ def show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = '', 
 
     plt.show()
 
+MIN = 1000
+MAX = 1050
 def main():
-    COUNT = 10000
-    MIN = 1000
-    MAX = 1050
+    start = time.time()
+    COUNT = 10_000_000
 
     #for testing
     #COUNT = 100
     #primes = [1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049]
 
     rando_numbers = get_rando_numbers(COUNT, MIN, MAX) # generate random integers from MIN to MAX inclusively
-    primes = []
+    primes = get_primes(MIN, MAX)
 
+    end1 = time.time()
+    print(f'Execution time: {end1 - start} sec') 
+
+    random_primes = []
     for number in rando_numbers:
-        if is_prime(number):
-            primes.append(number)
+        if number in primes:
+        #if is_prime(number):
+            random_primes.append(number)
+    
+    end2 = time.time()
+    print(f'Execution time: {end2 - end1} sec') 
+    
+    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=random_primes, data_labels=True, vertical=True)
 
-    show_freq_distribution(chart_title='Frequency Distribution', axis_lbl = 'Primes', data=primes, data_labels=True, vertical=True)
-
-    pass
 
 main()
