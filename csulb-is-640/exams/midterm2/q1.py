@@ -63,24 +63,4 @@ def get_grade_gpa(score):
     finally:
         return grade, gpa
 
-def main():
-    FILENAME = 'scores.txt'
-    scores_records = get_records_from_text_file(FILENAME) #read from scores.txt
-    grades = []
-    class_gpa = 0
-
-    for record in scores_records:
-        first_name = record[0]
-        last_name = record[1]
-        score = int(record[2])
-        grade, gpa = get_grade_gpa(score) #determine the letter grade and gpa score for this record
-        grades.append(f'{first_name} {last_name} {grade}') #add this records name and grade to the grades list
-        class_gpa += gpa # add this records gpa to the class_gpa
-
-    score_count = len(scores_records)
-    class_gpa = class_gpa / score_count # find the average gpa for the class
-    gpa_str = f'The class GPA is {class_gpa:.2f}'
-    grades.append(gpa_str)
-    write_records_to_text_file('grades.txt',grades) #write to grades.txt
-
 main()

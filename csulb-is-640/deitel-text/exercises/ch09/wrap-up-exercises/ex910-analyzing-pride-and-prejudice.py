@@ -47,15 +47,6 @@ def char_frequency(text=''):
     result = [(x, len([c for c in word if c == x])) for x in get_unique_chars(word)]
     return result
 
-def word_frequency(text=''):
-    '''
-    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
-    in the string and the count of it's occurances within that string.
-    '''
-    in_str = text
-    result = [(x, len([c for c in word if c == x])) for x in get_unique_chars(word)]
-    return result
-
 def remove_non_alpha(text=''):
     in_str = text
     special_chars = " ~`!@#$%^&*()_-+={[}]|\:;\"'<,>.?/"
@@ -208,7 +199,6 @@ def analyse_file_txt(file_name, folder_path, encoding):
     print(f'Average paragraph length: {total_words / total_paragraphs:,.1f} words')
     print(f'First parapraph: {paragraphs[0]}')
     print(f'Last paragraph: {paragraphs[-1]}')
-    print(f'Word frequencies: {word')
 
     # write words to file
     with open (FOLDERNAME + BOOK_TITLE + ' words.txt', mode='w') as words_file:

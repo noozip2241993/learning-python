@@ -70,6 +70,35 @@ def write_records_to_text_file(file_name='log.txt', records=[]):
 
     print(f'Writing to {in_filename} done.')
 
+def char_frequency(text=''):
+    '''
+    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
+    in the string and the count of it's occurances within that string.
+    '''
+    in_str = text
+    result = [(x, len([c for c in in_str if c == x])) for x in get_unique_chars(in_str)]
+    return result
+
+def remove_non_alpha(text=''):
+    in_str = text
+    special_chars = " ~`!@#$%^&*()_-+={[}]|\:;\"'<,>.?/"
+    numberic_chars = '1234567890'
+    bad_chars = special_chars + numberic_chars
+    result = [x for x in in_str if x not in bad_chars]
+    return result
+
+def get_unique_chars(text=''):
+    in_str = text
+    result = {x for x in in_str} #returns a set of the unique charaters in the text arg 
+    return result
+
+def get_sentences(text=''):
+    import nltk.data
+
+    tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+    data = text
+    return '\n'.join(tokenizer.tokenize(data))
+
 def main():
     pass
 
