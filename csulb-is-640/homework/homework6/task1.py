@@ -152,46 +152,50 @@ def my_remove(str_to_edit, characters_to_remove):
         in_str = in_str.replace(char, '')
     return in_str
 
+def text_to_sentences(text='', sentence_delimiters=[]):
+    result = [line for line in my_split(text, sentence_delimiters) if line != ''] # non-empty string lines from text to a list of sentences based on given delimiters
+    result = [line.strip('\n') for line in result] # ensure no newline chars within sentences
+    return result
+
+def generate_sentence_dict(sentence='', bad_chars = ''):
+    letters_and_space = ''.join(char for char in sentence if char not in bad_chars) #remove given 'bad_chars' the result should be only letters and spaces
+    letter_count = len(letters_and_space.replace(' ',''))
+    character_count = len(sentence)
+    word_list = letters_and_space.split(' ')
+    word_count = sentence.count(' ') + 1
+    average_word_length = letter_count / word_count
+    result = {'text': sentence,
+            'letter_count': letter_count,
+            'character_count': character_count,
+            'words': word_list,
+            'word_count': word_count,
+            'ave_word_length': average_word_length}
+    return result
+
 def analyse_file_txt(file_name, sentence_delimiters, omission_list=None):
     SENTENCE_DELIMITERS = sentence_delimiters
     NON_SPACE_WHITESPACE = ['\n', '\t', '\r', '\f', '\v']
     SYMBOLS = ['~', '@', '#', '$', '%', '^', '*', '_', '-', '+', '=', '{', '[', '}', ']', '|', '<', '>', '/']
     SENT_END_PUNCT = ['!', '.', '?']
     OTHER_PUNCTUATION = ['\"', '\'', '`', '&', '(', ')', ':', ';', ',']
+    BAD_CHARS = ''.join(NON_SPACE_WHITESPACE + SYMBOLS + SENT_END_PUNCT + OTHER_PUNCTUATION)
 
     # read the file
     full_text = ''
     with open(file_name, mode='r', encoding='utf-8') as txt_file:
         full_text = txt_file.read()
 
-    # process the file's text into a list of sentences
-    sentences = [line for line in my_split(full_text, SENTENCE_DELIMITERS) if line != ''] # break the full_text into a list of sentences
-    sentences = [line.strip('\n') for line in sentences] # ensure no newline chars within sentences
-    #[print(sentence) for sentence in sentences]
+    sentences = text_to_sentences(full_text, SENTENCE_DELIMITERS) # process the file's text into a list of sentences
 
-    # generate statistics about the sentences
+    # generate a list of dictionaries each holding statistics about a sentence
     sentence_stats = []
     for sentence in sentences:
-        bad_chars = ''.join(NON_SPACE_WHITESPACE + SYMBOLS + SENT_END_PUNCT + OTHER_PUNCTUATION)
-        just_letters_space = ''.join(char for char in sentence if char not in bad_chars)
-        just_letters = just_letters_space.replace(' ','')
-        letter_count = len(just_letters)
-        character_count = len(sentence)
-        word_list = just_letters_space.split(' ')
-        word_count = sentence.count(' ') + 1
-        average_word_length = letter_count / word_count
-        sentence_stats.append({'text': sentence,
-                                'letter_count': letter_count,
-                                'character_count': character_count,
-                                'words': word_list,
-                                'word_count': word_count,
-                                'ave_word_length': average_word_length})
+        sentence_stats.append(generate_sentence_dict(sentence, BAD_CHARS))
 
+    # generate a list of dictionaries each holding statistics about each unique word
     word_stats = []
     for sentence in sentence_stats:
-        for word in sentence['words'] if word not in word_stats[]
-            word_stats.append({})
-            pass
+        pass # TODO
 
     longest_sentence = sorted(sentence_stats, key=lambda dict: dict['character_count'], reverse=True)[0]['text']
     total_word_count = 0
