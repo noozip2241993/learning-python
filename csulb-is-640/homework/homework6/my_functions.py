@@ -112,26 +112,6 @@ def text_to_sentences(text='', sentence_delimiters=[]):
     result = [line.strip('\n') for line in result] # ensure no newline chars within sentences
     return result
 
-def generate_sentence_dict(sentence=''):
-    WHITESPACE = ' \n\t\r\f\v'
-    SYMBOLS = '~@#$%^*_-+={[}]|<>/'
-    PUNCTUATION = '!.?"`&():;,'
-    bad_chars = WHITESPACE.replace(' ','') + SYMBOLS.replace('-','') + PUNCTUATION
-
-    letters_and_spaces = ''.join(char for char in sentence if char not in bad_chars).replace('-',' ')
-    letter_count = len(letters_and_spaces.replace(' ',''))
-    character_count = len(sentence)
-    word_list = letters_and_spaces.split(' ')
-    word_count = sentence.count(' ') + 1
-    average_word_length = letter_count / word_count
-    result = {'text': sentence,
-            'letter_count': letter_count,
-            'character_count': character_count,
-            'words': word_list,
-            'word_count': word_count,
-            'ave_word_length': average_word_length}
-    return result
-
 def display_dict(dictionary={}):
     [print(f"{key}: {value:{',.2f' if type(value) == float else ','}}") for key, value in dictionary.items() if dictionary]
 

@@ -1,7 +1,26 @@
 from my_functions import change_working_dir
 from my_functions import text_to_sentences
-from my_functions import generate_sentence_dict
 from my_functions import display_dict
+
+def generate_sentence_dict(sentence=''):
+    WHITESPACE = ' \n\t\r\f\v'
+    SYMBOLS = '~@#$%^*_-+={[}]|<>/'
+    PUNCTUATION = '!.?"`&():;,'
+    bad_chars = WHITESPACE.replace(' ','') + SYMBOLS.replace('-','') + PUNCTUATION
+
+    letters_and_spaces = ''.join(char for char in sentence if char not in bad_chars).replace('-',' ')
+    letter_count = len(letters_and_spaces.replace(' ',''))
+    character_count = len(sentence)
+    word_list = letters_and_spaces.split(' ')
+    word_count = sentence.count(' ') + 1
+    average_word_length = letter_count / word_count
+    result = {'text': sentence,
+            'letter_count': letter_count,
+            'character_count': character_count,
+            'words': word_list,
+            'word_count': word_count,
+            'ave_word_length': average_word_length}
+    return result
 
 def calc_text_stats(list_of_sentence_dicts, display_stats=False):
     sentence_stats = list_of_sentence_dicts
