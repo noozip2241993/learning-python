@@ -22,7 +22,7 @@ def calc_text_stats(list_of_sentence_dicts, display_stats=False):
                 unique_words[word.lower()] = 1
     unique_words_by_freq = sorted(unique_words.items(), key=lambda item: item[1], reverse=True)
     
-    #make a list of the ten longest words
+    # make a list of the ten longest words
     long_word_count = 10
     longest_words = sorted(unique_words, key=lambda k: len(k), reverse=True)[:long_word_count]
     
@@ -67,11 +67,9 @@ def main():
     change_working_dir() #ensure python working directory is the folder where this script resides.
     FILENAME = 'remarks.txt' # assumes same folder as this script
     WORD_OMISSIONS = None
-    SENTENCE_DELIMITERS = ['  ','.\n', '\n\n']
+    SENTENCE_DELIMITERS = ['  ','.\n', '\n\n'] # sentences split on double spaces, '.' char at the end of the line and double spaced lines
 
     analyse_text_file(FILENAME, SENTENCE_DELIMITERS, WORD_OMISSIONS)
-
-    pass
 
 if __name__ == '__main__':
     main()

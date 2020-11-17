@@ -74,7 +74,7 @@ def write_records_to_text_file(file_name='log.txt', records=[]):
 
 def char_frequency(text=''):
     '''
-    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
+    char_frequency takes in a string and returns a dict of tuples each tuple providing a unique character
     in the string and the count of it's occurances within that string.
     '''
     in_str = text
@@ -103,7 +103,8 @@ def get_sentences_nltk(text=''):
 
 def multi_split(to_split, separators):
     import re
-    reg_ex = '|'.join(map(re.escape, separators))
+    #reg_ex = '|'.join(map(re.escape, separators))
+    reg_ex = '|'.join(separators)
     return re.split(reg_ex, to_split)
 
 def text_to_sentences(text='', sentence_delimiters=[]):
@@ -133,6 +134,17 @@ def generate_sentence_dict(sentence=''):
 
 def display_dict(dictionary={}):
     [print(f"{key}: {value:{',.2f' if type(value) == float else ','}}") for key, value in dictionary.items() if dictionary]
+
+def get_char_frequency(string, start_ord, end_ord):
+    char_frequency = dict()
+    for char in string:
+        if ord(char) >= start_ord and ord(char) <= end_ord:
+            if char in char_frequency:
+                char_frequency[char] += 1
+            else:
+                char_frequency[char] = 1
+    char_frequency = sorted(char_frequency.items(), key=lambda item: item[0])
+    return char_frequency
 
 def main():
     pass
