@@ -94,7 +94,7 @@ def get_unique_chars(text=''):
     result = {x for x in in_str} #returns a set of the unique charaters in the text arg 
     return result
 
-def get_sentences(text=''):
+def get_sentences_nltk(text=''):
     import nltk.data
 
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
@@ -115,9 +115,9 @@ def generate_sentence_dict(sentence=''):
     WHITESPACE = ' \n\t\r\f\v'
     SYMBOLS = '~@#$%^*_-+={[}]|<>/'
     PUNCTUATION = '!.?"`&():;,'
-    bad_chars = WHITESPACE.replace(' ','') + SYMBOLS + PUNCTUATION
+    bad_chars = WHITESPACE.replace(' ','') + SYMBOLS.replace('-','') + PUNCTUATION
 
-    letters_and_spaces = ''.join(char for char in sentence if char not in bad_chars)
+    letters_and_spaces = ''.join(char for char in sentence if char not in bad_chars).replace('-',' ')
     letter_count = len(letters_and_spaces.replace(' ',''))
     character_count = len(sentence)
     word_list = letters_and_spaces.split(' ')
