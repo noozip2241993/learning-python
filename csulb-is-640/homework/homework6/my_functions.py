@@ -1,4 +1,4 @@
-def change_working_dir(new_directory=''):
+def change_working_dir(new_directory='', verbose=False):
     '''
     Redefine the Python working directory given a new directory path.
     If no path is provided, this will redefine the working directory to be
@@ -7,8 +7,9 @@ def change_working_dir(new_directory=''):
     # Import the os module
     import os
 
-    # Print the current working directory
-    print("Working directory was: {0}".format(os.getcwd()))
+    if verbose:
+        # Print the current working directory
+        print("Working directory was: {0}".format(os.getcwd()))
 
     # Get the new directory
     in_str = new_directory
@@ -18,8 +19,9 @@ def change_working_dir(new_directory=''):
     # Change the current working directory
     os.chdir(in_str)
 
-    # Print the current working directory
-    print("Working directory is now: {0}".format(os.getcwd()))
+    if verbose:
+        # Print the current working directory
+        print("Working directory is now: {0}".format(os.getcwd()))
 
 def get_lines_from_text_file(file_name=''):
     in_filename = file_name
@@ -109,11 +111,16 @@ def text_to_sentences(text='', sentence_delimiters=[]):
     result = [line.strip('\n') for line in result] # ensure no newline chars within sentences
     return result
 
-def generate_sentence_dict(sentence='', bad_chars = ''):
-    letters_and_space = ''.join(char for char in sentence if char not in bad_chars) #remove given 'bad_chars' the result should be only letters and spaces
-    letter_count = len(letters_and_space.replace(' ',''))
+def generate_sentence_dict(sentence=''):
+    WHITESPACE = ' \n\t\r\f\v'
+    SYMBOLS = '~@#$%^*_-+={[}]|<>/'
+    PUNCTUATION = '!.?"`&():;,'
+    bad_chars = WHITESPACE.replace(' ','') + SYMBOLS + PUNCTUATION
+
+    letters_and_spaces = ''.join(char for char in sentence if char not in bad_chars)
+    letter_count = len(letters_and_spaces.replace(' ',''))
     character_count = len(sentence)
-    word_list = letters_and_space.split(' ')
+    word_list = letters_and_spaces.split(' ')
     word_count = sentence.count(' ') + 1
     average_word_length = letter_count / word_count
     result = {'text': sentence,
@@ -123,6 +130,9 @@ def generate_sentence_dict(sentence='', bad_chars = ''):
             'word_count': word_count,
             'ave_word_length': average_word_length}
     return result
+
+def display_dict(dictionary={}):
+    [print(f"{key}: {value:{',.2f' if type(value) == float else ','}}") for key, value in dictionary.items() if dictionary]
 
 def main():
     pass
