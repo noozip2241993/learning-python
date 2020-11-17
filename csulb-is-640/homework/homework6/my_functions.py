@@ -32,7 +32,7 @@ def get_lines_from_text_file(file_name=''):
             while line != '':
                 result.append(line.rstrip('\n'))
                 line = text_file.readline()
-    except FileNotFoundError as error:
+    except FileNotFoundError:
         print(f'{file_name} not found. Returning empty string')
         return ''
     result[0] = result[0].replace('\ufeff', '') #because we force encoding to 'utf8' '\ufeff' may be written to the result. This removes it.
@@ -87,7 +87,7 @@ def char_frequency(text=''):
 
 def remove_non_alpha(text=''):
     in_str = text
-    special_chars = " ~`!@#$%^&*()_-+={[}]|\:;\"'<,>.?/"
+    special_chars = ' ~`!@#$%^&*()_-+={[}]|:;\"\'<,>.?\/'
     numberic_chars = '1234567890'
     bad_chars = special_chars + numberic_chars
     result = [x for x in in_str if x not in bad_chars]
