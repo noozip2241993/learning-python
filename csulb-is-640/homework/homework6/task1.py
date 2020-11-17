@@ -2,20 +2,6 @@ from my_functions import change_working_dir
 from my_functions import text_to_sentences
 from my_functions import generate_sentence_dict
 
-def char_frequency(text=''):
-    '''
-    char_frequency takes in a string and returns a list of tuples each tuple providing a unique character
-    in the string and the count of it's occurances within that string.
-    '''
-    in_str = text
-    result = [(x, len([c for c in in_str if c == x])) for x in get_unique_chars(in_str)]
-    return result
-
-def get_unique_chars(text=''):
-    in_str = text
-    result = {x for x in in_str} #returns a set of the unique charaters in the text arg 
-    return result
-
 def display_txt_file_statistics(dict_of_stats={}):
     this_word_count = dict_of_stats['word count']
     this_char_count = dict_of_stats['character count']
@@ -35,7 +21,6 @@ def calc_text_stats(list_of_sentence_dicts, display_stats=False):
     total_character_count = sum(len(sentence['text']) for sentence in sentence_stats)
     average_word_length = total_character_count / total_word_count
     average_sentence_word_count = total_word_count / len(sentence_stats)
-    unique_words = set(lambda x: x.append(word) for word in sentence['words'] in sentence_stats)
 
     if display_stats:
         display_txt_file_statistics({'word count': total_word_count, 
