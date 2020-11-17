@@ -5,12 +5,13 @@ from my_functions import text_to_sentences
 from my_functions import get_char_frequency
 
 def main():
-    change_working_dir()
     READ_FILE = 'book.txt'
+    READ_FILE = 'book2.txt'
     WRITE_FILE = 'summary.txt'
     START_ORD = ord('A')
     END_ORD = ord('Z')
 
+    change_working_dir() # ensure the working directory is that which this script resides in
     full_text = ' '.join(get_lines_from_text_file(READ_FILE)).upper() # read the file
     char_frequency = get_char_frequency(full_text, START_ORD, END_ORD) # make the char frequency as a dict
 
