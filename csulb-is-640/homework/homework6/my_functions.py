@@ -99,6 +99,31 @@ def get_sentences(text=''):
     data = text
     return '\n'.join(tokenizer.tokenize(data))
 
+def multi_split(to_split, separators):
+    import re
+    reg_ex = '|'.join(map(re.escape, separators))
+    return re.split(reg_ex, to_split)
+
+def text_to_sentences(text='', sentence_delimiters=[]):
+    result = [line for line in multi_split(text, sentence_delimiters) if line != ''] # non-empty string lines from text to a list of sentences based on given delimiters
+    result = [line.strip('\n') for line in result] # ensure no newline chars within sentences
+    return result
+
+def generate_sentence_dict(sentence='', bad_chars = ''):
+    letters_and_space = ''.join(char for char in sentence if char not in bad_chars) #remove given 'bad_chars' the result should be only letters and spaces
+    letter_count = len(letters_and_space.replace(' ',''))
+    character_count = len(sentence)
+    word_list = letters_and_space.split(' ')
+    word_count = sentence.count(' ') + 1
+    average_word_length = letter_count / word_count
+    result = {'text': sentence,
+            'letter_count': letter_count,
+            'character_count': character_count,
+            'words': word_list,
+            'word_count': word_count,
+            'ave_word_length': average_word_length}
+    return result
+
 def main():
     pass
 
