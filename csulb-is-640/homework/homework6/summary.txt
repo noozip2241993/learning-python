@@ -1,2 +1,28 @@
+A 243
+B 52
+C 61
+D 120
+E 407
+F 86
+G 71
+H 209
+I 247
+J 3
+K 25
+L 121
+M 120
+N 248
+O 280
+P 29
+Q 2
+R 198
+S 223
+T 282
+U 124
+V 37
+W 78
+X 6
+Y 110
+Z 6
 
-It doesn't have all letters.
+It has all letters.

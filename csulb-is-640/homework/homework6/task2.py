@@ -1,12 +1,11 @@
-from my_functions import change_working_dir
-from my_functions import get_lines_from_text_file
-from my_functions import write_records_to_text_file
-from my_functions import text_to_sentences
-from my_functions import get_char_frequency
+from shared_functions import change_working_dir
+from shared_functions import get_lines_from_text_file
+from shared_functions import write_records_to_text_file
+from shared_functions import get_char_frequency
 
 def main():
     READ_FILE = 'book.txt'
-    READ_FILE = 'book2.txt'
+    #READ_FILE = 'book2.txt' #testing a smaller file without all letters
     WRITE_FILE = 'summary.txt'
     START_ORD = ord('A')
     END_ORD = ord('Z')

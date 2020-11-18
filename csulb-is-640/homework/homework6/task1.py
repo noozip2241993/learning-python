@@ -1,6 +1,6 @@
-from my_functions import change_working_dir
-from my_functions import text_to_sentences
-from my_functions import display_dict
+from shared_functions import change_working_dir
+from shared_functions import text_to_sentences
+from shared_functions import display_dict
 
 def generate_sentence_dict(sentence=''):
     WHITESPACE = ' \n\t\r\f\v'
